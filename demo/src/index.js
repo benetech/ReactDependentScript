@@ -10,13 +10,12 @@ class Demo extends Component {
       <div>
         <h1>ReactDependentScript Demo</h1>
         <h2>Load Jquery, using the renderChildren callback</h2>
+        <div id="editorContainer" />
         <ReactDependentScript
           loadingComponent={<div>Loading JQuery...</div>}
           scripts={[
-            'https://code.jquery.com/jquery-3.2.1.min.js',
-            'https://code.jquery.com/ui/1.12.1/jquery-ui.js'
+            'https://www.wiris.net/demo/editor/editor'
           ]}
-          stylesheets={['https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css']}
           renderChildren={() => {
             // This renderChildren callback is one method of rendering the contents of the
             // ReactDependentScript component.  It can be useful in cases like this where you
@@ -24,15 +23,16 @@ class Demo extends Component {
             // $ function from jQuery.
 
             // Note the use of the $ jQuery function, and inserting a jQueryUI date picker
-            return (
+            var editor = com.wiris.jsEditor.JsEditor.newInstance({
+              language: "en"
+            });
+
+            editor.insertInto(document.getElementById("editorContainer"));
+            
+            return(
               <div>
-                <div>JQuery & JQueryUI script is loaded, here is a count and a date picker!</div>
-                <div>
-                  Found {$('*').length} nodes in the page
-                </div>
-                <JQueryPluginExample />
               </div>
-            );
+            )
           }}
         />
         <h2>Load Stripe, using child components</h2>
